@@ -25,7 +25,9 @@ public class CountriesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<Country>> GetCountry(int id)
     {
-        var country = await _context.Countries.FindAsync(id);
+        var country = await _context.Countries
+            .Include(c => c.Hotels) //Eager loading the Hotels navigation property
+            .FirstOrDefaultAsync(q => q.CountryId == id);
 
         if (country == null)
         {
@@ -40,7 +42,7 @@ public class CountriesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCountry(int id, Country country)
     {
-        if (id != country.Id)
+        if (id != country.CountryId)
         {
             return BadRequest();
         }
@@ -74,7 +76,7 @@ public class CountriesController : ControllerBase
         _context.Countries.Add(country);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("GetCountry", new { id = country.Id }, country);
+        return CreatedAtAction("GetCountry", new { id = country.CountryId }, country);
     }
 
     // DELETE: api/Country/5
@@ -95,6 +97,6 @@ public class CountriesController : ControllerBase
 
     private async Task<bool> CountryExistsAsync(int id)
     {
-        return await _context.Countries.AnyAsync(e => e.Id == id);
+        return await _context.Countries.AnyAsync(e => e.CountryId == id);
     }
 }
