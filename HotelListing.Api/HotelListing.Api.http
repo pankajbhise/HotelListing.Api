@@ -18,7 +18,7 @@ Content-Type: application/json
 DELETE {{HotelListing.Api_HostAddress}}/api/countries/{{id}}
 
 ###
-@id=2
+
 GET {{HotelListing.Api_HostAddress}}/api/countries/{{id}}
 
 ###
@@ -44,9 +44,8 @@ POST {{HotelListing.Api_HostAddress}}/api/hotels
 Content-Type: application/json
 
 {
-  "Name": "Test Hotel",
   "Address": "123 Main St",
-  "Rating": 4.5,
+  "Rating": 45,
   "CountryId": 2
 }
 
@@ -55,16 +54,19 @@ DELETE {{HotelListing.Api_HostAddress}}/api/hotels/{{id}}
 
 ###
 
-
+@id=1
 GET {{HotelListing.Api_HostAddress}}/api/hotels/{{id}}
 
 ###
 
-PUT {{HotelListing.Api_HostAddress}}/api/hotels/{id}
+PUT {{HotelListing.Api_HostAddress}}/api/hotels/{{id}}
 Content-Type: application/json
 
 {
-  //Nullable
+  "Id": 1,
+  "Name": "Ocean Coral",
+  "Address": "Delhi",
+  "CountryId": 1
 }
 
 ###
